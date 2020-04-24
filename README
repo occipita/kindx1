@@ -1,3 +1,8 @@
 Kind language interpreter
 
 An experimental version in Java, intended for experiments in Object model semantics.
+
+(Using an old version of java to allow code to run on Android 4.x, as this is my current
+development platform; files are in datestamped zip files as I have been unable to find 
+a working git implementation for this platform, so am using zip in lieue of real version
+control)
