@@ -1,0 +1,7 @@
+Kind language interpreter
+
+An experimental version in Java, intended for experiments in Object model semantics.
+
+(For version history, please see the 'archive' branch, which contains
+versions developed using old versions of Java and not using git for
+version control)
