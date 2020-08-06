@@ -1,6 +1,6 @@
 package kind.x1.ast;
 
-import kind.x1.Optional;
+import java.util.Optional;
 import java.util.List;
 
 public class DefnVisitor 

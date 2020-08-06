@@ -1,7 +1,7 @@
 package kind.x1.interpreter.patterns;
 
 import kind.x1.interpreter.types.Type;
-import kind.x1.Optional;
+import java.util.Optional;
 
 public class TypeCheckingPatternMatcher implements PatternMatcher
 {

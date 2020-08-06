@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-import kind.x1.Optional;
+import java.util.Optional;
 
 public class PropertySymbol extends Symbol
 {

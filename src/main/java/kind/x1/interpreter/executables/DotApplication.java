@@ -6,6 +6,7 @@ import kind.x1.interpreter.*;
 import kind.x1.*;
 import kind.x1.misc.SID;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class DotApplication implements Evaluatable
 {

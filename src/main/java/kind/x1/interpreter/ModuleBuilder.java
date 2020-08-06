@@ -6,6 +6,7 @@ import kind.x1.misc.SID;
 import java.util.List;
 import kind.x1.interpreter.symbols.SymbolBuilder;
 import kind.x1.interpreter.symbols.Symbol;
+import java.util.Optional;
 
 public class ModuleBuilder extends ModVisitor
 {

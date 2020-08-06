@@ -9,6 +9,7 @@ import kind.x1.interpreter.patterns.*;
 
 import java.util.List;
 import java.util.Collections;
+import java.util.Optional;
 
 public class ModuleBuilderTest extends Assertions implements Runnable
 {

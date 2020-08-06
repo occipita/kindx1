@@ -5,6 +5,7 @@ import kind.x1.ast.ExprVisitor;
 import kind.x1.misc.SID;
 import kind.x1.*;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class TypeBuilder extends TypeVisitor
 {

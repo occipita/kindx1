@@ -1,6 +1,6 @@
 package kind.x1.interpreter.types;
 
-import kind.x1.Optional;
+import java.util.Optional;
 import kind.x1.interpreter.*;
 import kind.x1.DiagnosticProducer;
 

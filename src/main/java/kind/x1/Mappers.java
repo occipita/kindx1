@@ -2,29 +2,31 @@ package kind.x1;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.Optional;
 
 
 public class Mappers {
     
-    public static final Mapper<Object,String> MAP_TO_STRING = new Mapper<Object,String>(){
-        public String map (Object o) { return o.toString(); }
+    public static final Function<Object,String> MAP_TO_STRING = new Function<Object,String>(){
+        public String apply (Object o) { return o.toString(); }
     };
-    public static <T> Mapper<List<T>,List<T>> mapToUnmodifiableList()
+    public static <T> Function<List<T>,List<T>> mapToUnmodifiableList()
     {
-        return new Mapper<List<T>,List<T>>() {
-            public List<T> map (List<T> o) { return Collections.unmodifiableList(o); }
+        return new Function<List<T>,List<T>>() {
+            public List<T> apply (List<T> o) { return Collections.unmodifiableList(o); }
         };
     }
-    public static <T> Mapper<T,Optional<T>> mapToOptional()
+    public static <T> Function<T,Optional<T>> mapToOptional()
     {
-        return new Mapper<T,Optional<T>>() {
-            public Optional<T> map (T o) { return Optional.of(o); }
+        return new Function<T,Optional<T>>() {
+            public Optional<T> apply (T o) { return Optional.of(o); }
         };
     }
-    public static <T> Mapper<T,Optional<T>> mapNullableToOptional()
+    public static <T> Function<T,Optional<T>> mapNullableToOptional()
     {
-        return new Mapper<T,Optional<T>>() {
-            public Optional<T> map (T o) { return Optional.ofNullable(o); }
+        return new Function<T,Optional<T>>() {
+            public Optional<T> apply (T o) { return Optional.ofNullable(o); }
         };
     }
     

@@ -1,6 +1,7 @@
 package kind.x1.ast;
 
 import kind.x1.*;
+import java.util.Optional;
 
 public abstract class Pattern implements PatternVisitor.Visitable
 {

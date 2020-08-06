@@ -8,6 +8,7 @@ import kind.x1.interpreter.types.primitive.*;
 import kind.x1.interpreter.values.literals.*;
 import kind.x1.misc.SID;
 import java.util.Collections;
+import java.util.Optional;
 
 public class ResolutionTest extends Assertions implements Runnable
 {

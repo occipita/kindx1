@@ -8,6 +8,7 @@ import kind.x1.misc.*;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 
 public class TestType implements Type, MemberResolver
 {

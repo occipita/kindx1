@@ -2,7 +2,7 @@ package kind.x1.interpreter;
 
 import java.util.TreeMap;
 import java.util.Map;
-import kind.x1.Optional;
+import java.util.Optional;
 import kind.x1.interpreter.symbols.Symbol;
 
 public class Scope 

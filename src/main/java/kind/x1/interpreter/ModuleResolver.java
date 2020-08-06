@@ -1,7 +1,7 @@
 package kind.x1.interpreter;
 
 import kind.x1.misc.SID;
-import kind.x1.Optional;
+import java.util.Optional;
 
 public interface ModuleResolver 
 {

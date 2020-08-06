@@ -1,11 +1,11 @@
 package kind.x1.interpreter.types;
 
-import kind.x1.Optional;
 import kind.x1.interpreter.*;
 import kind.x1.DiagnosticProducer;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 public class FunctionType implements Type
 {

@@ -14,6 +14,7 @@ import kind.x1.interpreter.patterns.PatternMatcherBuilder;
 import kind.x1.interpreter.TypeParameterContext;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class FunctionBuilder extends DefnVisitor
 {

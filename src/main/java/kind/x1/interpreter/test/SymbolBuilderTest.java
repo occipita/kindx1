@@ -10,6 +10,7 @@ import kind.x1.interpreter.types.TypeReference;
 
 import java.util.List;
 import java.util.Collections;
+import java.util.Optional;
 
 public class SymbolBuilderTest extends Assertions implements Runnable
 {

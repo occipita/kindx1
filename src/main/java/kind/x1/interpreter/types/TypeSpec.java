@@ -8,6 +8,8 @@ package kind.x1.interpreter.types;
  
 import kind.x1.*;
 import kind.x1.interpreter.TypeParameterContext;
+import java.util.Optional;
+import java.util.function.Function;
 
 public class TypeSpec 
 {
@@ -36,10 +38,10 @@ public class TypeSpec
         return Optional.of(type);
     }
     
-    public TypeSpec mapType (Mapper<Type,Type> mapper)
+    public TypeSpec mapType (Function<Type,Type> mapper)
     {
         if (mode == Mode.UNSPECIFIED) return this;
-        return new TypeSpec (mode, mapper.map(type));
+        return new TypeSpec (mode, mapper.apply(type));
     }
     
     public boolean isMoreSpecificThan (TypeSpec ts)

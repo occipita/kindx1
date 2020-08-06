@@ -10,6 +10,7 @@ import kind.x1.interpreter.types.ConstraintBuilder;
 import kind.x1.interpreter.TypeParameterContext;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SymbolBuilder extends DefnVisitor
 {

@@ -3,6 +3,8 @@ package kind.x1.interpreter;
 import kind.x1.misc.SID;
 import kind.x1.*;
 import kind.x1.interpreter.symbols.Symbol;
+import java.util.Optional;
+import java.util.function.Function;
 
 public abstract class Resolver 
 { 
@@ -10,16 +12,16 @@ public abstract class Resolver
     { 
         String search = id.head();
         Optional<SID> sub = id.tail();
-        Mapper<Symbol,Optional<Symbol>> subres = sub.isPresent() ? new SubResolver(sub.get()) : Mappers.mapToOptional();
+        Function<Symbol,Optional<Symbol>> subres = sub.isPresent() ? new SubResolver(sub.get()) : Mappers.mapToOptional();
         return resolve(search, subres);
     }
 
-    public abstract Optional<Symbol> resolve(String id, Mapper<Symbol, Optional<Symbol>> subres);
+    public abstract Optional<Symbol> resolve(String id, Function<Symbol, Optional<Symbol>> subres);
     
     public static final Resolver EMPTY = new Resolver()
     {
         public Optional<Symbol> resolve(SID id) { return Optional.empty(); }
-        public Optional<Symbol> resolve(String id, Mapper<Symbol, Optional<Symbol>> subres) { return Optional.empty(); }
+        public Optional<Symbol> resolve(String id, Function<Symbol, Optional<Symbol>> subres) { return Optional.empty(); }
     };
     
     static final class ScopeResolver extends Resolver
@@ -32,7 +34,7 @@ public abstract class Resolver
             this.scopes = scopes;
             this.chain = chain;
         } 
-        public Optional<Symbol> resolve(String search, Mapper<Symbol, Optional<Symbol>> subres) 
+        public Optional<Symbol> resolve(String search, Function<Symbol, Optional<Symbol>> subres) 
         {
             for (Scope s : scopes)
             {
@@ -43,17 +45,17 @@ public abstract class Resolver
         }
     }
     public static Resolver newScope (Resolver chain, Scope... scopes) { return new ScopeResolver(scopes, chain); }
-    public static class SubResolver implements Mapper<Symbol, Optional<Symbol>>
+    public static class SubResolver implements Function<Symbol, Optional<Symbol>>
     {
         private String search;
-        private Mapper<Symbol,Optional<Symbol>> subres;
+        private Function<Symbol,Optional<Symbol>> subres;
         public SubResolver (SID id)
         {
             search = id.head();
             Optional<SID> sub = id.tail();
             subres = sub.isPresent() ? new SubResolver(sub.get()) : Mappers.mapToOptional();       
         }
-        public Optional<Symbol> map (Symbol s)
+        public Optional<Symbol> apply (Symbol s)
         {
             Optional<Resolver> r = s.getValue().getStaticMemberResolver();
             if (!r.isPresent()) return Optional.empty();

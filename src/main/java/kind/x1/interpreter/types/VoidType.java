@@ -4,6 +4,7 @@ import kind.x1.misc.SID;
 import kind.x1.*;
 import kind.x1.interpreter.*;
 import kind.x1.interpreter.symbols.*;
+import java.util.Optional;
 
 public class VoidType implements Type 
 {

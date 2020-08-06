@@ -4,6 +4,7 @@ import kind.x1.*;
 import static kind.x1.TokenType.*;
 import java.util.List;
 import java.util.Collections;
+import java.util.Optional;
 
 public abstract class Defn implements DefnVisitor.Visitable
 {
@@ -362,9 +363,7 @@ public abstract class Defn implements DefnVisitor.Visitable
         public ClassDef classDef (Token id, Optional<Pair<List<String>, List<Type.Constraint>>> ao, Optional<Token> meta, Optional<List<Type>> sup, List<Defn> mem)
         {
             Pair<List<String>, List<Type.Constraint>> args = ao.orElse(new Pair<>(Collections.emptyList(),Collections.emptyList()));
-            return new ClassDef (id.text(), args.v1, args.v2, meta.map(new Mapper<Token,String>(){ 
-                    public String map(Token t) { return t.text(); }
-                }), sup.orElse(Collections.emptyList()), mem);
+            return new ClassDef (id.text(), args.v1, args.v2, meta.map(Token::text), sup.orElse(Collections.emptyList()), mem);
         }
         public Attr attr(AttrList al, Defn d) { return new Attr(al, d); }
         public AttrList emptyAttrList() { return new AttrList(); }

@@ -1,6 +1,6 @@
 package kind.x1.misc;
 
-import kind.x1.Optional;
+import java.util.Optional;
 
 public class Predicates 
 {

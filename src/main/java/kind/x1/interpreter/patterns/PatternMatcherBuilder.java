@@ -4,6 +4,7 @@ import kind.x1.ast.PatternVisitor;
 import kind.x1.ast.TypeVisitor;
 import kind.x1.Factory;
 import kind.x1.interpreter.types.*;
+import java.util.Optional;
 
 public class PatternMatcherBuilder extends PatternVisitor
 {

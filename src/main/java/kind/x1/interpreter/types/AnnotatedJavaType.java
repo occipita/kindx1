@@ -4,6 +4,7 @@ import kind.x1.misc.SID;
 import kind.x1.interpreter.values.KVal;
 import kind.x1.*;
 import kind.x1.interpreter.*;
+import java.util.Optional;
 
 /**
  * Defines a Kind type which is implemented via a Java class with 

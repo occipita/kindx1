@@ -2,6 +2,8 @@ package kind.x1.interpreter.types;
 
 import kind.x1.*;
 import kind.x1.interpreter.*;
+import java.util.Optional;
+import java.util.function.Function;
 
 public class Ref implements Type
 {
@@ -43,7 +45,5 @@ public class Ref implements Type
         if (t == null || !(t instanceof Ref)) return t;
         return ((Ref)t).target;
     }
-    public static Mapper<Type,Type> STRIPPER = new Mapper<Type,Type> () {
-        public Type map (Type t) { return strip(t); }
-    };
+    public static Function<Type,Type> STRIPPER = Ref::strip;
 }

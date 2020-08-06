@@ -3,7 +3,7 @@ package kind.x1.interpreter;
 import java.util.Map;
 import java.util.HashMap;
 import kind.x1.misc.SID;
-import kind.x1.Optional;
+import java.util.Optional;
 
 public class StaticModuleResolver implements ModuleResolver
 {

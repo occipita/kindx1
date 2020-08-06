@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import kind.x1.interpreter.types.FunctionType;
 import kind.x1.interpreter.types.Type;
-import kind.x1.Optional;
+import java.util.Optional;
 
 public class OverloadedFunctionSymbol extends Symbol
 {

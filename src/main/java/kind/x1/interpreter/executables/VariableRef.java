@@ -6,6 +6,7 @@ import kind.x1.interpreter.values.KVal;
 import kind.x1.interpreter.symbols.Symbol;
 import kind.x1.interpreter.*;
 import kind.x1.*;
+import java.util.Optional;
 
 public class VariableRef implements Evaluatable
 {

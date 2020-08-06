@@ -3,12 +3,12 @@ package kind.x1.interpreter.symbols;
 import kind.x1.interpreter.types.*;
 import kind.x1.interpreter.patterns.PatternMatcher;
 import kind.x1.interpreter.executables.Executable;
-import kind.x1.Optional;
 import kind.x1.interpreter.TypeParameterContext;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 
 public class FunctionSymbol extends Symbol

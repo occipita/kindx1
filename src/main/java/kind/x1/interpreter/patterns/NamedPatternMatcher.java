@@ -1,6 +1,6 @@
 package kind.x1.interpreter.patterns;
 
-import kind.x1.Optional;
+import java.util.Optional;
 import kind.x1.interpreter.types.Type;
 
 public class NamedPatternMatcher implements PatternMatcher

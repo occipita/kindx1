@@ -1,7 +1,6 @@
 package kind.x1.misc;
 
 import java.util.*;
-import kind.x1.Optional;
 
 public class SID 
 {
