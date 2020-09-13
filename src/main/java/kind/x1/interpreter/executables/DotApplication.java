@@ -17,6 +17,7 @@ public class DotApplication implements Evaluatable
     public DotApplication(Evaluatable sub, String id) { subExpr = sub; this.id = id; }
     public Evaluatable getSubExpr () { return subExpr; }
     public String getId () { return id; }
+    public String toString () { return "<" + subExpr + " . " + id + ">"; } 
 
     public boolean inferTypesSilently (Resolver resolver, TypeSpec target) 
     { 

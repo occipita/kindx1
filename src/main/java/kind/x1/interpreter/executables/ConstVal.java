@@ -14,6 +14,7 @@ public class ConstVal implements Evaluatable
     public ConstVal (KVal v, Type t) { value = v; type = t; }
     public KVal getValue() { return value; }
     public Type getType () { return type; }
+    public String toString () { return "<const " + value + ":" + type +">"; } 
     
     public boolean inferTypesSilently (Resolver resolver, TypeSpec target) { return true; }
     public boolean inferTypes (Resolver resolver, TypeParameterContext context, DiagnosticProducer diag, TypeSpec expected) 

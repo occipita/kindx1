@@ -19,6 +19,7 @@ public class FunctionCall implements Evaluatable
     public FunctionCall(Evaluatable sub, List<Evaluatable> args) { subExpr = sub; this.args = args; }
     public Evaluatable getSubExpr () { return subExpr; }
     public List<Evaluatable> getArgs () { return args; }
+    public String toString () { return "<call " + subExpr + " " + args + ">"; }
     
     public boolean inferTypesSilently (Resolver resolver, TypeSpec target) 
     { 

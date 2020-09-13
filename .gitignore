@@ -1,0 +1,12 @@
+# backup files
+*.bak
+*~
+
+# log files
+*.log
+hserr*
+logs
+
+# build files
+target
+*.class

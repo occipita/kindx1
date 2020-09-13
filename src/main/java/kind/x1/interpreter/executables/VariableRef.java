@@ -15,6 +15,8 @@ public class VariableRef implements Evaluatable
     private Optional<Symbol> symbol = Optional.empty();
     public VariableRef (SID id) { this.id = id; }
     public SID getId () { return id; }    
+
+    public String toString () { return "<var " + id + ">"; }
     
     public boolean inferTypesSilently (Resolver resolver, TypeSpec target) 
     {

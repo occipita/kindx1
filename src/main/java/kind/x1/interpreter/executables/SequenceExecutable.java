@@ -8,4 +8,5 @@ public class SequenceExecutable implements Executable
     
     public SequenceExecutable(List<Executable> e) { executables = e; }
     public List<Executable> getExecutables() { return executables; }
+    public String toString() { return "<sequence " + executables + ">"; }
 }

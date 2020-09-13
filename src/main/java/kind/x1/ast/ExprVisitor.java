@@ -23,6 +23,14 @@ public class ExprVisitor
     { 
         return IGNORE_LITERAL_FLAGS;
     }
+    public LiteralFlagVisitor stringLiteral (String text) 
+    { 
+        return IGNORE_LITERAL_FLAGS;
+    }
+    public LiteralFlagVisitor floatLiteral (String text) 
+    { 
+        return IGNORE_LITERAL_FLAGS;
+    }
     
     public void variableRef (SID id) { }
     

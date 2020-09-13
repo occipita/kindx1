@@ -39,7 +39,10 @@ public abstract class Expr implements ExprVisitor.Visitable
         public String getVal() { return val; }
         public List<String> getFlags() { return flags; }
         public String toString() { return "Expr.FloatLiteral<"+val+","+flags+">"; }
-        public void visit (ExprVisitor v) { }
+        public void visit (ExprVisitor v) {
+            ExprVisitor.LiteralFlagVisitor fv = v.floatLiteral(val);
+            for (String f : flags) fv.literalFlag(f); 
+	}
     }
     public static class StringLiteral extends Expr
     {
@@ -50,7 +53,10 @@ public abstract class Expr implements ExprVisitor.Visitable
         public String getVal() { return val; }
         public List<String> getFlags() { return flags; }
         public String toString() { return "Expr.StringLiteral<"+val+","+flags+">"; }
-        public void visit (ExprVisitor v) { }
+        public void visit (ExprVisitor v) {
+	    ExprVisitor.LiteralFlagVisitor fv = v.stringLiteral(val);
+	    for (String f : flags) fv.literalFlag(f); 
+	}
     }
     public static class RAssoc extends Expr
     {

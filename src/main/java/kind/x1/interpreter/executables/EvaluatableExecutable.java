@@ -6,4 +6,5 @@ public class EvaluatableExecutable implements Executable
     
     public EvaluatableExecutable(Evaluatable e) { evaluatable = e; }
     public Evaluatable getEvaluatable() { return evaluatable; }
+    public String toString () { return "<eval " + evaluatable + ">"; }
 }
