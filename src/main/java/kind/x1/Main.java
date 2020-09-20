@@ -3,10 +3,12 @@ package kind.x1;
 import kind.x1.ast.*;
 import java.io.*;
 import java.util.Optional;
+import java.util.Collections;
 import kind.x1.interpreter.*;
 import kind.x1.interpreter.symbols.Symbol;
 import kind.x1.interpreter.symbols.FunctionSymbol;
 import kind.x1.interpreter.executables.Executable;
+import kind.x1.interpreter.patterns.PatternNotMatchedException;
 
 public class Main
 {
@@ -66,7 +68,17 @@ public class Main
 	    return;
 	    // FIXME this doesn't handle overloaded functions
 	}
-	Executable mainExec = ((FunctionSymbol)mainSym.get()).getExecutable().orElse(Executable.NULL_EXECUTABLE);
+	FunctionSymbol mainFn = (FunctionSymbol)mainSym.get();
+	Executable mainExec = mainFn.getExecutable().orElse(Executable.NULL_EXECUTABLE);
 	System.out.println ("  Main executable: " + mainExec);
+	try {
+	    Resolver resolver = Resolver.newScope (Resolver.EMPTY,
+						   module.getLocalScope(), 
+						   mainFn.generateParameterScope(Collections.emptyList()));
+	    mainExec.execute (resolver);
+	}
+	catch (PatternNotMatchedException e) {
+	    System.err.println (e);
+	}
     }
 }

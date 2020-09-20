@@ -1,14 +1,17 @@
 package kind.x1.interpreter.symbols;
 
 import kind.x1.interpreter.types.*;
-import kind.x1.interpreter.patterns.PatternMatcher;
+import kind.x1.interpreter.patterns.*;
 import kind.x1.interpreter.executables.Executable;
 import kind.x1.interpreter.TypeParameterContext;
+import kind.x1.interpreter.values.KVal;
+import kind.x1.interpreter.Scope;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Iterator;
 
 
 public class FunctionSymbol extends Symbol
@@ -65,4 +68,18 @@ public class FunctionSymbol extends Symbol
             return new OverloadedFunctionSymbol (getName(), Arrays.asList ((FunctionSymbol)old, this));
         return this;
     }
+
+    public Scope generateParameterScope (List<? extends KVal> argvals) throws PatternNotMatchedException
+    {
+	if (argvals.size() != parameters.size())
+	    throw new IllegalArgumentException("parameter/argument list size mismatch in " +
+					       getName() + " : " +
+					       getType().map(Type::getName).orElse("<unknown>"));
+	Iterator<? extends KVal> arg = argvals.iterator();
+	Scope scope = new Scope();
+	for (PatternMatcher matcher : parameters)
+	    matcher.matchOrThrow (arg.next(), scope);
+	return scope;
+    }
 }
+					 
