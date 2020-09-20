@@ -12,12 +12,12 @@ public class EvaluatableBuilderTest
     public void stringLiteral ()
     {
         EvaluatableBuilder b = new EvaluatableBuilder();
-        b.stringLiteral("42");
+        b.stringLiteral("\"42\"");
         Evaluatable e = b.build();
         assertEquals ("type", e.getClass(), ConstVal.class);
         ConstVal cv = (ConstVal)e;
         assertEquals ("kind type", cv.getType(), LiteralTypes.STRINGLITERAL);
-        assertEquals ("value", ((IntLiteral)cv.getValue()).getValue().longValue(), 42L);
+        assertEquals ("value", "42", ((StringLiteral)cv.getValue()).getValue());
     }
 }
 

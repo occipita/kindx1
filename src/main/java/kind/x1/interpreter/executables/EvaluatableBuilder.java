@@ -22,6 +22,16 @@ public class EvaluatableBuilder extends ExprVisitor
         building = new ConstVal(new IntLiteral(value), LiteralTypes.INTLITERAL);
         return IGNORE_LITERAL_FLAGS; // FIXME
     }
+    public LiteralFlagVisitor floatLiteral (String value)
+    {
+        building = new ConstVal(new FloatLiteral(value), LiteralTypes.FLOATLITERAL);
+        return IGNORE_LITERAL_FLAGS; // FIXME
+    }
+    public LiteralFlagVisitor stringLiteral (String value)
+    {
+        building = new ConstVal(new StringLiteral(value), LiteralTypes.STRINGLITERAL);
+        return IGNORE_LITERAL_FLAGS; // FIXME
+    }
     public void variableRef (SID id) {
         building = new VariableRef (id);
     }
