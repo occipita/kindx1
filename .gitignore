@@ -1,6 +1,7 @@
 # backup files
 *.bak
 *~
+\#*#
 
 # log files
 *.log
