@@ -11,13 +11,13 @@ public interface Continuation
      *@param continuation the default continuation (which moves on to the next statement or terminates
      *  the current function with no return value if this executable represents the last statement
      */
-    default Continuation execute (Resolver resolver, ExecutionContext context, Continuation continuation) { return continuation; }
+    Continuation execute (Resolver resolver, ExecutionContext context, Continuation continuation);
 
 
     /** Continuously execute continuations until a Continuation.EXIT is returned. */
-    public static void executeUntilExit (Resolver resolver, ExecutionContext context, Continuation continuation)
+    public static void executeUntilExit (Resolver resolver, ExecutionContext context, Continuation toRun)
     {
-	
+        while (toRun != EXIT) toRun = toRun.execute (resolver, context, EXIT);
     }
 
     public static final Continuation EXIT = new Continuation () {
