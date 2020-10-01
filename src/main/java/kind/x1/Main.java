@@ -75,7 +75,7 @@ public class Main
 	    Resolver resolver = Resolver.newScope (Resolver.EMPTY,
 						   module.getLocalScope(), 
 						   mainFn.generateParameterScope(Collections.emptyList()));
-	    mainExec.execute (resolver);
+	    Continuation.executeUntilExit (resolver, new ExecutionContext(), mainExec);
 	}
 	catch (PatternNotMatchedException e) {
 	    System.err.println (e);

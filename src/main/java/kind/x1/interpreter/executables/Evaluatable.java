@@ -5,7 +5,7 @@ import kind.x1.*;
 import kind.x1.interpreter.types.*;
 import java.util.Optional;
 
-public interface Evaluatable 
+public interface Evaluatable
 {
     /** First stage of type inference. Resolve & infer anything that can be inferred
      *  without adding additional type parameters or constraints. Does not produce any
@@ -34,4 +34,14 @@ public interface Evaluatable
      *  always be known and fully resolved if inferTypes has been called ans returned 
      *  true; may be empty if it either has not been called or if it returned false. */
     Optional<Type> getResultType ();
+
+    /** 
+     * Returns a Continuation that will evaluate the expression and pass the result to 
+     * the specified BindableContinuation. 
+     */
+    default Continuation execute (Resolver resolver, ExecutionContext context, BindableContinuation continuation)
+    {
+	throw new RuntimeException("Not implemented");
+    }
+
 }
