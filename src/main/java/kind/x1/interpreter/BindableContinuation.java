@@ -9,4 +9,9 @@ import kind.x1.interpreter.values.KVal;
 public interface BindableContinuation
 {
     Continuation bind (KVal value);
+
+    public static BindableContinuation discarding (Continuation next)
+    {
+	return discarded -> next;
+    }
 }
