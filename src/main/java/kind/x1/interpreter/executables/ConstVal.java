@@ -35,5 +35,8 @@ public class ConstVal implements Evaluatable
     
     public Optional<Type> getResultType () { return Optional.of(type); }
     
-    
+    public Continuation execute (Resolver r, ExecutionContext ec, BindableContinuation cont)
+    {
+	return cont.bind(value);
+    }
 }
