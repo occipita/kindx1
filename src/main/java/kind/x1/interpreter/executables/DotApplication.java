@@ -77,6 +77,10 @@ public class DotApplication implements Evaluatable
 
     public Continuation execute (Resolver resolver, ExecutionContext context, BindableContinuation continuation)
     {
-	throw new RuntimeException("Not implemented");
+	return subExpr.execute(resolver, context, lhs -> {
+		Type lhsType = resolveMemberType();
+		return continuation.bind (((MemberResolver)lhsType).getMemberValue (lhs, id).orElseThrow (
+					      () -> new RuntimeException(lhsType + ": getter for " + id + " not implemented")));
+	    });	
     }
 }

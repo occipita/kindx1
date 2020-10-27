@@ -35,7 +35,7 @@ public class DotApplicationTest
 	};
 	
 	Continuation r = sut.execute (null, null, b);
-	for (int limit = 0; limit < 10 && r != next && r != null; )
+	for (int limit = 0; limit < 10 && r != next && r != null; limit++)
 	    r = r.execute (null, null, next);
 	assertEquals ("execute() should have (eventually) returned next", next, r);
 	assertEquals ("binding result", memberVal, result.get());
