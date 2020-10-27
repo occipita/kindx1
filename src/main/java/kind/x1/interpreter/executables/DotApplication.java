@@ -75,4 +75,8 @@ public class DotApplication implements Evaluatable
      
     public Optional<Type> getResultType () { return resultType; }
 
+    public Continuation execute (Resolver resolver, ExecutionContext context, BindableContinuation continuation)
+    {
+	throw new RuntimeException("Not implemented");
+    }
 }
