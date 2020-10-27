@@ -3,6 +3,7 @@ package kind.x1.interpreter;
 import kind.x1.interpreter.*;
 import kind.x1.DiagnosticProducer;
 import kind.x1.interpreter.types.*;
+import kind.x1.interpreter.values.KVal;
 import java.util.*;
 
 public class TypeParameterContext 
@@ -27,7 +28,12 @@ public class TypeParameterContext
             // FIXME scan constraints for one that provides id
             return Optional.empty();
         }
-        
+	public Optional<KVal> getMemberValue (KVal object, String id)
+	{
+	    // FIXME find constraint proof that provides id and invoke it to fetch value
+	    return Optional.empty();
+        }
+	
         public boolean isImplicit () { return implicit; }
         public void addInferredConstraint (Constraint c)
         {
