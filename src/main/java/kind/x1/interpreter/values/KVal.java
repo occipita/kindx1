@@ -6,6 +6,6 @@ import kind.x1.interpreter.Resolver;
 
 public interface KVal 
 {
-    Optional<Type> asType ();
-    Optional<Resolver> getStaticMemberResolver ();
+    default Optional<Type> asType () { return Optional.empty(); }
+    default Optional<Resolver> getStaticMemberResolver () { return Optional.empty(); }
 }
