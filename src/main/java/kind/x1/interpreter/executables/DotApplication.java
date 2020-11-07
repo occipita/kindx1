@@ -1,7 +1,7 @@
 package kind.x1.interpreter.executables;
 
 import kind.x1.interpreter.types.*;
-import kind.x1.interpreter.values.KVal;
+import kind.x1.interpreter.values.*;
 import kind.x1.interpreter.*;
 import kind.x1.*;
 import kind.x1.misc.SID;
@@ -79,8 +79,10 @@ public class DotApplication implements Evaluatable
     {
 	return subExpr.execute(resolver, context, lhs -> {
 		Type lhsType = resolveMemberType();
-		return continuation.bind (((MemberResolver)lhsType).getMemberValue (lhs, id).orElseThrow (
-					      () -> new RuntimeException(lhsType + ": getter for " + id + " not implemented")));
+		KVal value = ((MemberResolver)lhsType).getMemberValue (lhs, id).orElseThrow (
+		    () -> new RuntimeException(lhsType + ": getter for " + id + " not implemented"));
+		if (value instanceof KCallable) value = FunctionBinder.bindThisArg(lhs, (KCallable)value);
+		return continuation.bind (value);
 	    });	
     }
 }
