@@ -21,7 +21,7 @@ public class FunctionCallTest
 	Type resultType = new TestType("ResultType");
 	Type fnType = new FunctionType(Collections.emptyList(), Optional.of(resultType));
 	KVal fnValue = new KCallable() {
-	    public Continuation call (List<KVal> args, Resolver callingScope, ExecutionContext callingContext, BindableContinuation continuation)
+	    public Continuation call (List<KVal> args, KVal thisArg, Resolver callingScope, ExecutionContext callingContext, BindableContinuation continuation)
 	    {
 		return continuation.bind(expResult);
 	    }
@@ -54,7 +54,7 @@ public class FunctionCallTest
 	Type arg2Type = new TestType("Arg2Type");
 	Type fnType = new FunctionType(Arrays.asList(arg1Type, arg2Type), Optional.of(resultType));
 	KVal fnValue = new KCallable() {
-	    public Continuation call (List<KVal> args, Resolver callingScope, ExecutionContext callingContext, BindableContinuation continuation)
+	    public Continuation call (List<KVal> args, KVal thisArg, Resolver callingScope, ExecutionContext callingContext, BindableContinuation continuation)
 	    {
 		assertEquals ("size of arg list in call method", 2, args.size());
 		assertEquals ("arg 1 value", expArg1, args.get(0));
