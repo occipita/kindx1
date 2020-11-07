@@ -2,9 +2,11 @@ package kind.x1.interpreter.executables;
 
 import kind.x1.interpreter.types.*;
 import kind.x1.interpreter.values.KVal;
+import kind.x1.interpreter.values.KCallable;
 import kind.x1.interpreter.*;
 import kind.x1.*;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -137,6 +139,15 @@ public class FunctionCall implements Evaluatable
     public Optional<Type> getResultType () { return resultType; }
 
 
+    public Continuation execute (Resolver resolver, ExecutionContext context, BindableContinuation continuation)
+    {
+	// evaluate function
+	return subExpr.execute (resolver, context, fn -> {
+		// evaluate arguments
 
+		// execute function
+		return ((KCallable)fn).call (Collections.emptyList(), resolver, context, continuation);
+	    });
+    }
     
 }
