@@ -71,4 +71,8 @@ public class OperatorChain implements Evaluatable
         return getChain().getResultType(); 
     }
 
+    public Continuation execute (Resolver resolver, ExecutionContext context, BindableContinuation continuation)
+    {
+	return getChain().execute (resolver, context, continuation);
+    }
 }

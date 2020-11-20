@@ -64,6 +64,7 @@ public class OperatorChainTest
         TypeParameterContext tpc = new TypeParameterContext();
         Resolver res = Resolver.EMPTY;
         TestType t1 = new TestType (SID.from("test::t1"));
+	t1.addOperator("+", t1, t1, (a,b)->a);
         ConstVal e1 = new ConstVal (null, tpc.addImplicit());
         ConstVal e2 = new ConstVal (null, tpc.addImplicit());
         ConstVal e3 = new ConstVal (null, t1);
@@ -95,6 +96,7 @@ public class OperatorChainTest
         TypeParameterContext tpc = new TypeParameterContext();
         Resolver res = Resolver.EMPTY;
         TestType t1 = new TestType (SID.from("test::t1"));
+	t1.addOperator("+", t1, t1, (a,b)->a);
         ConstVal e1 = new ConstVal (null, tpc.addImplicit());
         ConstVal e2 = new ConstVal (null, t1);
         OperatorChain oc = new OperatorChain(false);
@@ -116,6 +118,7 @@ public class OperatorChainTest
         TypeParameterContext tpc = new TypeParameterContext();
         Resolver res = Resolver.EMPTY;
         TestType t1 = new TestType (SID.from("test::t1"));
+	t1.addOperator("+", t1, t1, (a,b)->a);
         ConstVal e1 = new ConstVal (null, tpc.addImplicit());
         ConstVal e2 = new ConstVal (null, t1);
         OperatorChain oc = new OperatorChain(false);
@@ -137,6 +140,7 @@ public class OperatorChainTest
         TypeParameterContext tpc = new TypeParameterContext();
         Resolver res = Resolver.EMPTY;
         TestType t1 = new TestType (SID.from("test::t1"));
+	t1.addOperator("+", t1, t1, (a,b)->a);
         ConstVal e1 = new ConstVal (null, tpc.addImplicit());
         ConstVal e2 = new ConstVal (null, new Ref (t1));
         OperatorChain oc = new OperatorChain(false);

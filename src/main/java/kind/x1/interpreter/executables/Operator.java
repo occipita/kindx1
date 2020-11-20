@@ -247,4 +247,9 @@ public class Operator implements Evaluatable
         // fixme subtypes
         return t1;
     }
+
+    public Continuation execute (Resolver resolver, ExecutionContext context, BindableContinuation continuation)
+    {
+	return null;
+    }
 }

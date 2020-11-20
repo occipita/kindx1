@@ -4,6 +4,7 @@ import kind.x1.interpreter.*;
 import kind.x1.DiagnosticProducer;
 import kind.x1.interpreter.types.*;
 import kind.x1.interpreter.values.KVal;
+import kind.x1.interpreter.values.KCallable;
 import java.util.*;
 
 public class TypeParameterContext 
@@ -31,6 +32,16 @@ public class TypeParameterContext
 	public Optional<KVal> getMemberValue (KVal object, String id)
 	{
 	    // FIXME find constraint proof that provides id and invoke it to fetch value
+	    return Optional.empty();
+        }
+        public Optional<Type> getMemberOperatorType (String name)
+        {
+            // FIXME scan constraints for one that provides operator
+            return Optional.empty();
+        }
+	public Optional<KCallable> getMemberOperator (KVal object, String name)
+	{
+	    // FIXME find constraint proof that provides operator and invoke it to fetch and bind value
 	    return Optional.empty();
         }
 	
