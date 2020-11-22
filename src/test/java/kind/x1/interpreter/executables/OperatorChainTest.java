@@ -178,4 +178,45 @@ public class OperatorChainTest
         assertFalse ("checkTypes fails", oc.checkTypes (diag));
         assertEquals ("should have produced error message", diag.getErrors().toString(), "[Operator '+' undefined for arguments (test::t1, test::t1)]"); 
     }
+    @Test
+    public void executesOperatorDefinition ()
+    {
+        TestDiagnosticProducer diag = new TestDiagnosticProducer();
+        TypeParameterContext tpc = new TypeParameterContext();
+        Resolver res = Resolver.EMPTY;
+	TestKVal tv1 =new TestKVal(), tv2 = new TestKVal(), tv3 = new TestKVal();
+        TestType t1 = new TestType (SID.from("test::t1"));
+	t1.addOperator("+", t1, t1, (a,b)->{
+		assertSame(a, tv1);
+		assertSame(b, tv2);
+		return tv3;
+	    });
+        
+        ConstVal e1 = new ConstVal (tv1, t1);
+        ConstVal e2 = new ConstVal (tv2, t1);
+        OperatorChain oc = new OperatorChain(false);
+        oc.getOperands().add(e1);
+        oc.getOperands().add(e2);
+        oc.getOperators().add(new OperatorChain.Operator("+")); // forall T . (TxT)->T
+        
+        assertTrue ("inferTypesSilently succeeds", oc.inferTypesSilently (res, TypeSpec.UNSPECIFIED));
+        assertTrue ("inferTypes succeeds", oc.inferTypes (Resolver.EMPTY, tpc, diag, TypeSpec.UNSPECIFIED));
+        assertTrue ("checkTypes succeeds", oc.checkTypes (diag));
+
+	Continuation next = (r,ec,c1) -> null;
+	AtomicReference<KVal> result = new AtomicReference<>(null);
+	
+	BindableContinuation b = v -> {
+	    result.set(v);
+	    return next;
+	};
+	
+	Continuation r = oc.execute (null, null, b);
+	for (int limit = 0; limit < 10 && r != next && r != null; limit++)
+	    r = r.execute (null, null, next);
+	assertEquals ("execute() should have (eventually) returned next", next, r);
+	assertEquals ("binding result", tv3, result.get());
+	
+
+    }
 }

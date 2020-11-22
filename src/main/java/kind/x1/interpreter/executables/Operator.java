@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Collections;
+import java.util.function.Function;
 import kind.x1.interpreter.types.*;
 import kind.x1.interpreter.types.primitive.*;
-import kind.x1.interpreter.values.KVal;
+import kind.x1.interpreter.values.*;
 import kind.x1.interpreter.*;
 import kind.x1.*;
 
@@ -134,7 +136,8 @@ public class Operator implements Evaluatable
     private TypeSpec rhsTarget = TypeSpec.UNSPECIFIED;
     private boolean debug;
     private Optional<Type> operatorType = Optional.empty();
-        
+    private Function<KVal,KCallable> operatorImpl = null;
+    
     public Operator(String n, Evaluatable lhs, Evaluatable rhs) 
     { 
         name = n; 
@@ -228,6 +231,7 @@ public class Operator implements Evaluatable
 	{
 	    MemberResolver mr = ((MemberResolver)tl);
 	    operatorType = mr.getMemberOperatorType(name);
+	    operatorImpl = val -> mr.getMemberOperator (val, name).orElse (null);
 	}
 	//System.out.printf ("Operator.checkTypes: %s %s %s -> %s\n", tl.getName(), name, tr.getName(), operatorType.map(Type::getName));
 
@@ -270,6 +274,9 @@ public class Operator implements Evaluatable
 
     public Continuation execute (Resolver resolver, ExecutionContext context, BindableContinuation continuation)
     {
-	return null;
+	return lhs.execute (resolver, context, lhsVal ->
+			    rhs.execute (resolver, context, rhsVal ->
+					 operatorImpl.apply(lhsVal).call (
+					     Collections.singletonList(rhsVal), null, resolver, context, continuation)));
     }
 }
