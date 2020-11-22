@@ -133,6 +133,7 @@ public class Operator implements Evaluatable
     private TypeSpec lhsTarget = TypeSpec.UNSPECIFIED;
     private TypeSpec rhsTarget = TypeSpec.UNSPECIFIED;
     private boolean debug;
+    private Optional<Type> operatorType = Optional.empty();
         
     public Operator(String n, Evaluatable lhs, Evaluatable rhs) 
     { 
@@ -157,6 +158,7 @@ public class Operator implements Evaluatable
             // LTR pass
             lhs.inferTypesSilently (resolver, lhsTarget);
             rhs.inferTypesSilently (resolver, rhsTarget);
+	    // FIXME attempt to infer based on defined types of operator
             updated = typeRule.apply(this, target) || updated;
             if (debug) dumpOp();
             if (!updated) break;
@@ -164,6 +166,7 @@ public class Operator implements Evaluatable
             updated = false;
             rhs.inferTypesSilently (resolver, rhsTarget);
             lhs.inferTypesSilently (resolver, lhsTarget);
+	    // FIXME attempt to infer based on defined types of operator
             updated = typeRule.apply(this, target) || updated;
             if (debug) dumpOp();
         } 
@@ -218,7 +221,24 @@ public class Operator implements Evaluatable
     public boolean checkTypes (DiagnosticProducer diag) 
     {
         // FIXME check operands
-        // FIXME check operators are defined with correct types 
+	// FIXME this should be done during inference, when we have a Resolver... 
+	Type tl = lhs.getResultType().orElse(Type.VOID);
+	Type tr = rhs.getResultType().orElse(Type.VOID);
+	if (!operatorType.isPresent() && tl instanceof MemberResolver)
+	{
+	    MemberResolver mr = ((MemberResolver)tl);
+	    operatorType = mr.getMemberOperatorType(name);
+	}
+	//System.out.printf ("Operator.checkTypes: %s %s %s -> %s\n", tl.getName(), name, tr.getName(), operatorType.map(Type::getName));
+
+	// check operator has been resolved and has correct type
+	if (!operatorType.isPresent() || !(operatorType.get() instanceof FunctionType))
+	{
+	    diag.error (String.format (
+			    "Operator '%s' undefined for arguments (%s, %s)",
+			    name, tl.getName(), tr.getName()));
+	    return false;
+	}
         return true; 
     }
 

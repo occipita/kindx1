@@ -22,6 +22,7 @@ public class OperatorChainTest
         TypeParameterContext tpc = new TypeParameterContext();
         Resolver res = Resolver.EMPTY;
         TestType t1 = new TestType (SID.from("test::t1"));
+	t1.addOperator("+", t1, t1, (a,b)->a);
         ConstVal e1 = new ConstVal (null, t1);
         ConstVal e2 = new ConstVal (null, tpc.addImplicit());
         OperatorChain oc = new OperatorChain(false);
@@ -43,6 +44,7 @@ public class OperatorChainTest
         TypeParameterContext tpc = new TypeParameterContext();
         Resolver res = Resolver.EMPTY;
         TestType t1 = new TestType (SID.from("test::t1"));
+	t1.addOperator("+", t1, t1, (a,b)->a);
         ConstVal e2 = new ConstVal (null, t1);
         ConstVal e1 = new ConstVal (null, tpc.addImplicit());
         OperatorChain oc = new OperatorChain(false);
@@ -65,6 +67,9 @@ public class OperatorChainTest
         Resolver res = Resolver.EMPTY;
         TestType t1 = new TestType (SID.from("test::t1"));
 	t1.addOperator("+", t1, t1, (a,b)->a);
+	t1.addOperator("-", t1, t1, (a,b)->a);
+	t1.addOperator("*", t1, t1, (a,b)->a);
+	t1.addOperator("/", t1, t1, (a,b)->a);
         ConstVal e1 = new ConstVal (null, tpc.addImplicit());
         ConstVal e2 = new ConstVal (null, tpc.addImplicit());
         ConstVal e3 = new ConstVal (null, t1);
@@ -96,7 +101,6 @@ public class OperatorChainTest
         TypeParameterContext tpc = new TypeParameterContext();
         Resolver res = Resolver.EMPTY;
         TestType t1 = new TestType (SID.from("test::t1"));
-	t1.addOperator("+", t1, t1, (a,b)->a);
         ConstVal e1 = new ConstVal (null, tpc.addImplicit());
         ConstVal e2 = new ConstVal (null, t1);
         OperatorChain oc = new OperatorChain(false);
@@ -118,7 +122,7 @@ public class OperatorChainTest
         TypeParameterContext tpc = new TypeParameterContext();
         Resolver res = Resolver.EMPTY;
         TestType t1 = new TestType (SID.from("test::t1"));
-	t1.addOperator("+", t1, t1, (a,b)->a);
+	t1.addOperator("==", t1, CoreTypes.BOOLEAN, (a,b)->null);
         ConstVal e1 = new ConstVal (null, tpc.addImplicit());
         ConstVal e2 = new ConstVal (null, t1);
         OperatorChain oc = new OperatorChain(false);
@@ -154,5 +158,24 @@ public class OperatorChainTest
         assertEquals ("opChainDereferences: should not produce any errors", diag.getErrors().toString(), "[]"); 
         assertEquals ("opChainDereferences: final type", oc.getResultType(), Optional.of(t1));
         assertEquals ("opChainDereferences: type of e1", e1.getResultType(), Optional.of(t1));
+    }
+    @Test
+    public void checksOperatorDefined ()
+    {
+        TestDiagnosticProducer diag = new TestDiagnosticProducer();
+        TypeParameterContext tpc = new TypeParameterContext();
+        Resolver res = Resolver.EMPTY;
+        TestType t1 = new TestType (SID.from("test::t1")); // t1 does not define operator '+'
+        ConstVal e1 = new ConstVal (null, tpc.addImplicit());
+        ConstVal e2 = new ConstVal (null, new Ref (t1));
+        OperatorChain oc = new OperatorChain(false);
+        oc.getOperands().add(e1);
+        oc.getOperands().add(e2);
+        oc.getOperators().add(new OperatorChain.Operator("+")); // forall T . (TxT)->T
+        
+        assertTrue ("inferTypesSilently succeeds", oc.inferTypesSilently (res, TypeSpec.UNSPECIFIED));
+        assertTrue ("inferTypes succeeds", oc.inferTypes (Resolver.EMPTY, tpc, diag, TypeSpec.UNSPECIFIED));
+        assertFalse ("checkTypes fails", oc.checkTypes (diag));
+        assertEquals ("should have produced error message", diag.getErrors().toString(), "[Operator '+' undefined for arguments (test::t1, test::t1)]"); 
     }
 }

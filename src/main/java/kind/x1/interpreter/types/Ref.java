@@ -2,10 +2,13 @@ package kind.x1.interpreter.types;
 
 import kind.x1.*;
 import kind.x1.interpreter.*;
+import kind.x1.interpreter.values.*;
+
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.Collections;
 
-public class Ref implements Type
+public class Ref implements Type, MemberResolver
 {
     private final Type target;
     
@@ -30,7 +33,17 @@ public class Ref implements Type
         return ((Ref)o).target.equals(target);
     }
     public int hashCode () { return target.hashCode() ^ 1771; }
-    
+
+    public Optional<Type> getMemberType (String name) { return Optional.empty(); }
+    public Optional<KVal> getMemberValue (KVal object, String name) { return Optional.empty(); }
+    public Optional<Type> getMemberOperatorType (String name) {
+	if (name.equals("=")) return Optional.of(new FunctionType(Collections.singletonList(target), Optional.of(target)));
+	return Optional.empty();
+    }
+    public Optional<KCallable> getMemberOperator (KVal object, String name) {
+	// FIXME: implement '='
+	return Optional.empty();
+    }
     public static Optional<Type> strip (Optional<Type> t)
     {
         if (!t.isPresent() || !(t.get() instanceof Ref)) return t;

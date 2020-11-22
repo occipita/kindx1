@@ -17,5 +17,6 @@ public interface Type
 	public Optional<Type> resolve (Resolver r, DiagnosticProducer diag) { return Optional.of(this); }
 	public boolean isSubTypeOf(Type t) { return t == ANY; }
     };
-	
+
+    public static Type VOID = new VoidType();
 }
