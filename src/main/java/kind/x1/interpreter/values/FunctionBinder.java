@@ -3,6 +3,7 @@ package kind.x1.interpreter.values;
 import java.util.*;
 import java.util.stream.*;
 import kind.x1.interpreter.*;
+import kind.x1.interpreter.types.*;
 
 public class FunctionBinder implements KCallable
 {
@@ -16,11 +17,13 @@ public class FunctionBinder implements KCallable
 	prependArgs = args;
 	this.target = target;
     }
-    public Continuation call (List<KVal> args, KVal thisArg, Resolver callingScope, ExecutionContext callingContext, BindableContinuation continuation)
+    public Continuation call (List<KVal> args, KVal thisArg, List<ConstraintEvidence> evidence,
+			      Resolver callingScope, ExecutionContext callingContext, BindableContinuation continuation)
     {
 	return target.call (
 	    prependArgs.map(pa -> joinLists(pa, args)).orElse(args),
 	    changeThisArg.orElse(thisArg),
+	    evidence,
 	    callingScope, callingContext, continuation);
     }
 

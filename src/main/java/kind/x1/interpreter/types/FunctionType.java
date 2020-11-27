@@ -12,11 +12,11 @@ public class FunctionType implements Type
     private List<Element> elements;
     public FunctionType (List<Type> p, Optional<Type> r)
     {    
-        elements = Collections.singletonList(new Element(p, r, Optional.empty()));
+        elements = Collections.singletonList(new Element(Optional.empty(), p, r, Optional.empty()));
     }
     public FunctionType (List<Type> p, Optional<Type> r, Type thisType)
     {    
-        elements = Collections.singletonList(new Element(p, r, Optional.of(thisType)));
+        elements = Collections.singletonList(new Element(Optional.empty(), p, r, Optional.of(thisType)));
     }
     private FunctionType (List<Element> es)
     {    
@@ -67,7 +67,7 @@ public class FunctionType implements Type
         for (Element e : elements)
         {
             // FIXME scan for more specific matches before returning?
-            if (e.parametersMatch(argTypes)) return e.getReturnType();
+            if (e.parametersMatch(argTypes).isPresent()) return e.getReturnType();
         }
         return Optional.empty();
     }
@@ -84,11 +84,18 @@ public class FunctionType implements Type
 
     public static class Element
     {
+	private Optional<TypeParameterContext> typeParameters;
 	private List<Type> parameters;
 	private Optional<Type> returnType;
 	private Optional<Type> thisType;
     
-	public Element (List<Type> p, Optional<Type> r, Optional<Type> tt) { parameters = p; returnType = r; thisType = tt; }
+	public Element (Optional<TypeParameterContext> tp, List<Type> p, Optional<Type> r, Optional<Type> tt)
+	{
+	    typeParameters = tp;
+	    parameters = p;
+	    returnType = r;
+	    thisType = tt;
+	}
     
 	public String getName()
 	{
@@ -143,18 +150,29 @@ public class FunctionType implements Type
 		rtt = thisType.get().resolve(r, diag);
 		if (!rtt.isPresent()) return Optional.empty();
 	    }
-	    return Optional.of(new Element(p,rrt,rtt));           
+	    return Optional.of(new Element(typeParameters,p,rrt,rtt));           
 	}
     
 	public List<Type> getParameters() { return parameters; }
 	public Optional<Type> getReturnType () { return returnType; }
 	public Optional<Type> getThisType () { return thisType; }
-	public boolean parametersMatch (List<Type> args)
+	/**
+	 * Match a list of types against the parameters to this function element
+	 * and if possible return evidence that all type parameter constraints
+	 * are satisfied.
+	 * @param    args the types of the arguments to be passed
+	 * @returns  an Optional containing a list of ConstraintEvidence objects 
+	 *           that prove all type constraints are satisfied if the arguments
+	 *           match the required type of the function, or Optional.empty()
+	 *           otherwise. If there are no type constraints and the arguments
+	 *           match, an empty list is returned.
+	 */
+	public Optional<List<ConstraintEvidence>> parametersMatch (List<Type> args)
 	{
-	    if (args.size() != parameters.size()) return false;
+	    if (args.size() != parameters.size()) return Optional.empty();
 	    for (int i = 0; i < args.size(); i++)
-		if (!args.get(i).isSubTypeOf(parameters.get(i))) return false;
-	    return true;
+		if (!args.get(i).isSubTypeOf(parameters.get(i))) return Optional.empty();
+	    return Optional.of(Collections.emptyList());
 	}
     
 	public boolean equals(Object obj)

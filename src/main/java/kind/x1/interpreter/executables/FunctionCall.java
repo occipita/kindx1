@@ -145,7 +145,8 @@ public class FunctionCall implements Evaluatable
 	return subExpr.execute (resolver, context,
 		fn -> Continuations.mapList (args, resolver, context,         // evaluate arguments
 		     args -> ((KCallable)fn).call (   // execute function with null thisArg
-			 args, null, resolver, context, continuation)));
+			 args, null, Collections.emptyList(),
+			 resolver, context, continuation)));
     }
     
 }

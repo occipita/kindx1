@@ -277,6 +277,7 @@ public class Operator implements Evaluatable
 	return lhs.execute (resolver, context, lhsVal ->
 			    rhs.execute (resolver, context, rhsVal ->
 					 operatorImpl.apply(lhsVal).call (
-					     Collections.singletonList(rhsVal), null, resolver, context, continuation)));
+					     Collections.singletonList(rhsVal), null, Collections.emptyList(),
+					     resolver, context, continuation)));
     }
 }

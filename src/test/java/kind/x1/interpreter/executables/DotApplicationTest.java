@@ -50,7 +50,8 @@ public class DotApplicationTest
 	TestType lhsType = new TestType("LHSType");
 	Type memberType = new FunctionType(Collections.emptyList(), Optional.of(new TestType("ResultType")), lhsType);
 	KVal memberVal = new KCallable() {
-	    public Continuation call (List<KVal> args, KVal thisArg, Resolver callingScope, ExecutionContext callingContext, BindableContinuation continuation)
+	    public Continuation call (List<KVal> args, KVal thisArg, List<ConstraintEvidence> evidence,
+				      Resolver callingScope, ExecutionContext callingContext, BindableContinuation continuation)
 	    {
 		assertEquals ("this argument", lhs, thisArg);
 		return continuation.bind(expResult);
@@ -75,7 +76,7 @@ public class DotApplicationTest
 	for (int limit = 0; limit < 10 && r != next && r != null; limit++)
 	    r = r.execute (null, null, next);
 	assertEquals ("execute() should have (eventually) returned next", next, r);
-	((KCallable)result.get()).call (null, null, null, null, b);
+	((KCallable)result.get()).call (null, null, null, null, null, b);
 	
 	assertEquals ("method result", expResult, result.get());
     }

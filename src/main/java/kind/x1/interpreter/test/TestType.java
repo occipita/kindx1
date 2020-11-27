@@ -38,7 +38,7 @@ public class TestType implements Type, MemberResolver
     public TestType addOperator (String n, Type rhs, Type res, BinaryOperator<KVal> op)
     {
 	operators.put (n, new FunctionType(Collections.singletonList(rhs), Optional.of(res)));
-	operatorBinders.put (n, lhs -> (args, thisArg, s, c, cont) -> cont.bind (op.apply(lhs, args.get(0))));
+	operatorBinders.put (n, lhs -> (args, thisArg, cl, s, c, cont) -> cont.bind (op.apply(lhs, args.get(0))));
 	return this;
     }
 
