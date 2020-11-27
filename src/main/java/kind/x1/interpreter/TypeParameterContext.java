@@ -125,4 +125,25 @@ public class TypeParameterContext
     
     public List<Parameter> getParameters () { return parameters; }
     public List<Constraint> getConstraints () { return constraints; }
-}
+
+    public String toString ()
+    {
+	if (parameters.isEmpty()) return "/* no type parameters */";
+	StringBuilder b = new StringBuilder ("forall ");
+
+	String s = "";
+	for (Parameter p : parameters)
+	{
+	    b.append (s).append(p.getName());
+	    s = ", ";
+	}
+	s = " : ";
+	for (Constraint c : constraints)
+	{
+	    b.append(s).append(c.getDescription());
+	    s = ", ";
+	}
+        
+	return b.toString();
+    }
+}   

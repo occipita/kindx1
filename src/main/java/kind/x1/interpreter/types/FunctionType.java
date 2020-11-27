@@ -18,6 +18,10 @@ public class FunctionType implements Type
     {    
         elements = Collections.singletonList(new Element(Optional.empty(), p, r, Optional.of(thisType)));
     }
+    public FunctionType (Optional<TypeParameterContext> tpc, List<Type> p, Optional<Type> r, Optional<Type> thisType)
+    {    
+        elements = Collections.singletonList(new Element(tpc, p, r, thisType));
+    }
     private FunctionType (List<Element> es)
     {    
         elements = es;
@@ -100,7 +104,7 @@ public class FunctionType implements Type
 	public String getName()
 	{
 	    StringBuilder b = new StringBuilder("");
-
+	    typeParameters.ifPresent(tpc -> b.append (tpc.toString()).append(" . "));
 	    thisType.ifPresent(t -> b.append(t.getName()).append("::"));
 	    
 	    String sep = "";
