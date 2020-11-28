@@ -29,6 +29,15 @@ public class Mappers {
             public Optional<T> apply (T o) { return Optional.ofNullable(o); }
         };
     }
-    
+    public static <S,T extends S> Function<S, Optional<T>> safeCaster(Class<S> source, Class<T> target)
+    {
+	return obj -> {
+	    try {
+		return Optional.ofNullable(target.cast(obj));
+	    } catch (ClassCastException ex) {
+		return Optional.empty();
+	    }
+	};
+    }
 
 }
