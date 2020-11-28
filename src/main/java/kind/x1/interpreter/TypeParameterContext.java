@@ -126,6 +126,11 @@ public class TypeParameterContext
     public List<Parameter> getParameters () { return parameters; }
     public List<Constraint> getConstraints () { return constraints; }
 
+    public boolean resolve (Resolver r) {
+	constraints.forEach(c -> c.resolve(r));
+	return constraints.stream().allMatch(Constraint::isResolved);
+    }
+    
     public String toString ()
     {
 	if (parameters.isEmpty()) return "/* no type parameters */";

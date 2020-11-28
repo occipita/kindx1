@@ -5,6 +5,7 @@ import kind.x1.misc.SID;
 import kind.x1.interpreter.*;
 import kind.x1.interpreter.symbols.Symbol;
 import java.util.*;
+import java.util.stream.*;
 
 public class Constraint 
 {
@@ -36,7 +37,10 @@ public class Constraint
      */
     public Optional<ConstraintEvidence> checkSatisfied (Map<Type,Type> substitutions)
     {
-	return Optional.empty(); // FIXME
+	return relationController.flatMap (
+	    rc -> rc.check (parameters.stream().map(p ->
+						    substitutions.containsKey(p) ? substitutions.get(p) : p)
+			    .collect(Collectors.toList())));
     }
     public String getDescription ()
     {
